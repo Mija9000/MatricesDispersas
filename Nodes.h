@@ -1,17 +1,18 @@
+#include <iostream>
 #pragma once
 #include <string>
-
+using namespace std;
 // ============================
 // Nodo de datos (celda)
 // ============================
 struct Node {
     int row, col;
-    std::string value;
+    string value;
 
     Node* nextInRow;
     Node* nextInCol;
 
-    Node(int r, int c, const std::string& val)
+    Node(int r, int c, const string& val)
         : row(r), col(c), value(val),
           nextInRow(nullptr), nextInCol(nullptr) {}
 };

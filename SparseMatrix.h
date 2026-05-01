@@ -1,7 +1,8 @@
+#include <iostream>
 #pragma once
 #include "Nodes.h"
 #include <string>
-
+using namespace std;
 class SparseMatrix {
 private:
     int rows, cols;
@@ -26,10 +27,10 @@ public:
     // ==========================
     // Operaciones básicas
     // ==========================
-    void insert(int r, int c, const std::string& val);
-    std::string get(int r, int c);
+    void insert(int r, int c, const string& val);
+    string get(int r, int c);
 
-    bool update(int r, int c, const std::string& val);
+    bool update(int r, int c, const string& val);
     bool removeCell(int r, int c);
 
     // ==========================
