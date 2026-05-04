@@ -157,7 +157,7 @@ void SparseMatrix::insert(int r, int c, const string& val) {
     if (r < 1 || r > rows || c < 1 || c > cols)
         return;
 
-    // Capa 3
+    // Existe el nodo normal?
     Node* existing = findNode(r, c);
 
     if (existing) {
