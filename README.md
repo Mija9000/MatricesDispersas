@@ -27,14 +27,3 @@ cmake --build .
 # 5. Ejecutar
 ./MatricesDispersas
 
-
-MatricesDispersas/
-├── Nodes.h           # Definición de Node, RowHeader, ColHeader
-├── SparseMatrix.h    # Declaración de la clase SparseMatrix
-├── SparseMatrix.cpp  # Implementación de la matriz dispersa
-├── Spreadsheet.h     # Declaración de la clase Spreadsheet
-├── Spreadsheet.cpp   # Lógica de fórmulas y operaciones
-├── GUI.h             # Declaración de la interfaz gráfica
-├── GUI.cpp           # Implementación de la GUI con Qt6
-├── main.cpp          # Punto de entrada
-└── CMakeLists.txt    # Configuración de compilación
