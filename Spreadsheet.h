@@ -4,8 +4,11 @@
 
 class Spreadsheet {
 private:
+
+    // instancia interna que usa SpreadSheet para funcionar, no duplicado
     SparseMatrix matrix;
-    // helpers de fórmulas
+    
+    // funciones de fórmulas tipo Excel
     double evaluate(const std::string& expr);
     double resolveToken(const std::string& token);
     double evaluateSUMA(const std::string& expr);

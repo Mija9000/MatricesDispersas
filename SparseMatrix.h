@@ -12,7 +12,7 @@ private:
     ColHeader* colHead;
 
     // ==========================
-    // Helpers internos
+    // Getters internos
     // ==========================
     RowHeader* getRowHeader(int r, bool createIfMissing);
     ColHeader* getColHeader(int c, bool createIfMissing);
@@ -41,14 +41,14 @@ public:
     void removeRange(int r1, int c1, int r2, int c2);
 
     // ==========================
-    // Agregaciones
+    // Sumas
     // ==========================
     double sumRow(int r);
     double sumCol(int c);
     double sumRange(int r1, int c1, int r2, int c2);
 
     // ==========================
-    // Utilidad
+    // Tests
     // ==========================
     void printGrid();
 };
