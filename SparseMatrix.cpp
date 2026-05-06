@@ -33,6 +33,7 @@ SparseMatrix::SparseMatrix(int r, int c)
 // Destructor
 // =====================================================
 
+// Elimina absolutamente todos los 3 tipos de nodos todo con delete
 SparseMatrix::~SparseMatrix() {
 
     // Se guarda el puntero rowHead inicial
