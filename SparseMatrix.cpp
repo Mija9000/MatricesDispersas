@@ -76,6 +76,7 @@ RowHeader* SparseMatrix::getRowHeader(int r, bool createIfMissing) {
     RowHeader* curr = rowHead;
 
     // recorremos la lista de RowHeaders hasta llegar a la row que buscamos y la guardamos en curr
+    
     while (curr && curr->row < r) {
         prev = curr;
         curr = curr->nextHeader;
@@ -264,7 +265,7 @@ bool SparseMatrix::removeCell(int r, int c) {
 
     // Obtiene los headers de fila y columna
     RowHeader* rh = getRowHeader(r, false);
-    ColHeader* ch = getColHeader(c, false);
+    ColHeader* ch = getColHeader(c, false);/
 
 
     // Estos whiles se hacen porque no tengo un prev para target,
@@ -373,7 +374,7 @@ void SparseMatrix::removeCol(int c) {
     // Obtiene el header de la columna
     ColHeader* ch = getColHeader(c, false);
 
-    // Si no existe, no hay nada que borrar
+    // Si no existe la cabeza, no hay nada que borrar
     if (!ch) return;
 
     // Recorre todos los nodos de la columna y los elimina uno por uno
@@ -392,12 +393,18 @@ void SparseMatrix::removeCol(int c) {
 // =====================================================
 
 void SparseMatrix::removeRange(int r1, int c1, int r2, int c2) {
-    // Asegura que r1 <= r2 y c1 <= c2
+    // Asegura que r1 <= r2 y c1 <= c2, intercambio valores de variables
+    // Ya que el usuario puede pasar (5,7 , 2,3), la celda menor debe estar primero
+    // O(1)
     if (r1 > r2) swap(r1, r2);
     if (c1 > c2) swap(c1, c2);
 
     // Recorre todas las filas dentro del rango
     for (int r = r1; r <= r2; r++) {
+
+        // este get es importante en cada iteracion porque si solo lo uso al inicio una vez,
+        // nunca entraría al for, no encontro r1, y ya fué, pero no, debe validarlo 
+        // cada vez, aunque esto cueste usar el get en cada iteración O(R)
         RowHeader* rh = getRowHeader(r, false);
 
         // Si la fila no existe, pasa a la siguiente
