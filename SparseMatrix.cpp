@@ -10,13 +10,23 @@ using namespace std;
 // Funciones Auxiliares para ver si es numérico o convertirlo
 // ===========================================================
 
+// Verifica si una cadena representa un número válido (entero o decimal)
 static bool isNumber(const string& s) {
+    // si la cadena está vacía, no es número
     if (s.empty()) return false;
 
+    // puntero auxiliar usado por strtod para saber dónde terminó la conversión
     char* endptr = nullptr;
+
+    // strtod intenta convertir la cadena a double
+    // - si logra convertir, endptr apunta al primer carácter no numérico
+    // - si no logra, endptr queda en el inicio
     strtod(s.c_str(), &endptr);
+
+    // si endptr terminó justo al final ('\0'), significa que toda la cadena era número
     return (*endptr == '\0');
 }
+
 
 static double toNumber(const string& s) {
     return stod(s);
