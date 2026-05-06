@@ -4,12 +4,12 @@
 
 Se utilizó una **matriz dispersa implementada con listas enlazadas cruzadas** porque:
 
-1. **Eficiencia de memoria**: Las hojas de cálculo son inherentemente dispersas (pocas celdas ocupadas). Una matriz densa gastaría memoria en celdas vacías.
+1. **Eficiencia de memoria**: Las hojas de cálculo pueden parecer muy llenas y grandes, pero en la realidad solo deberían almacenar las celdas ocupadas, las celdas vacías no deberían de gastar espacio y recursos. Una matriz densa gastaría memoria en celdas vacías.
 2. **Operaciones rápidas**: Buscar, insertar y eliminar celdas es O(h + k) donde h es el número de filas ocupadas y k el número de columnas ocupadas, mucho menor que O(rows × cols) en matriz densa.
 3. **Escalabilidad**: Permite trabajar con hojas de cualquier tamaño sin consumir memoria innecesaria.
 4. **Operaciones estructurales**: Eliminar filas/columnas es eficiente al solo recorrer nodos existentes, no la matriz completa.
 
-La estructura mantiene dos listas de headers (filas y columnas) conectadas a nodos de datos, permitiendo acceso rápido desde ambas dimensiones.
+La estructura mantiene dos listas de headers (filas y columnas, llamados colHead y rowHead) conectadas a nodos de datos, permitiendo acceso rápido desde ambas dimensiones a los nodos.
 
 ---
 

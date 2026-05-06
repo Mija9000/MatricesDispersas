@@ -251,11 +251,11 @@ bool SparseMatrix::update(int r, int c, const string& val) {
 
 
 // =====================================================
-// Remove Cell
+// Remove Cell (principal responsable de eliminación)
 // =====================================================
 
 bool SparseMatrix::removeCell(int r, int c) {
-    // Busca el nodo a eliminar
+    // Busca el nodo a eliminar -> O(h+k)
     Node* target = findNode(r, c);
 
     // Si no existe, no hay nada que borrar
@@ -266,11 +266,20 @@ bool SparseMatrix::removeCell(int r, int c) {
     RowHeader* rh = getRowHeader(r, false);
     ColHeader* ch = getColHeader(c, false);
 
+
+    // Estos whiles se hacen porque no tengo un prev para target,
+    // pero esta bien igual, sigue siendo O(h+k)
+
+
     // Quitar de la lista de la fila
+
+    // Caso 1. Donde justo es el first de RowHeader
+    // Caso 2. Donde esta en medio de 2 nodos de la fila
     if (rh->first == target) {
         rh->first = target->nextInRow;
     } else {
         Node* curr = rh->first;
+        // cuando llega al nodo genera la actualización de punteros
         while (curr && curr->nextInRow != target)
             curr = curr->nextInRow;
         if (curr)
@@ -278,17 +287,57 @@ bool SparseMatrix::removeCell(int r, int c) {
     }
 
     // Quitar de la lista de la columna
+
+    // Caso 1. Donde justo es el first de ColHeader
+    // Caso 2. Donde esta en medio de 2 nodos de la columna
     if (ch->first == target) {
         ch->first = target->nextInCol;
     } else {
         Node* curr = ch->first;
+        // cuando llega al nodo genera la actualización de punteros
         while (curr && curr->nextInCol != target)
             curr = curr->nextInCol;
         if (curr)
             curr->nextInCol = target->nextInCol;
     }
 
-    // Finalmente libera la memoria del nodo
+    // Finalmente libera la memoria del nodo, ya desconectado de las 2 listas enlazadas
+    delete target;
+    return true;
+}
+
+
+// ========================================================================
+// Remove Cell (principal responsable de eliminación, interno con puntero) 
+// ========================================================================
+
+bool SparseMatrix::removeCell(Node* target) {
+    if (!target) return false;
+
+    // O(C+R) cada uno
+    RowHeader* rh = getRowHeader(target->row, false);
+    ColHeader* ch = getColHeader(target->col, false);
+
+    // Quitar de la fila
+    if (rh->first == target) {
+        rh->first = target->nextInRow;
+    } else {
+        Node* curr = rh->first;
+        while (curr && curr->nextInRow != target)
+            curr = curr->nextInRow;
+        if (curr) curr->nextInRow = target->nextInRow;
+    }
+
+    // Quitar de la columna
+    if (ch->first == target) {
+        ch->first = target->nextInCol;
+    } else {
+        Node* curr = ch->first;
+        while (curr && curr->nextInCol != target)
+            curr = curr->nextInCol;
+        if (curr) curr->nextInCol = target->nextInCol;
+    }
+
     delete target;
     return true;
 }
@@ -309,7 +358,8 @@ void SparseMatrix::removeRow(int r) {
     Node* curr = rh->first;
     while (curr) {
         Node* next = curr->nextInRow;
-        removeCell(curr->row, curr->col);
+        // funcion sobrecargada para eliminar directamente el nodo
+        removeCell(curr);
         curr = next;
     }
 }
@@ -330,7 +380,8 @@ void SparseMatrix::removeCol(int c) {
     Node* curr = ch->first;
     while (curr) {
         Node* next = curr->nextInCol;
-        removeCell(curr->row, curr->col);
+        // funcion sobrecargada para eliminar directamente el nodo
+        removeCell(curr);
         curr = next;
     }
 }
@@ -359,7 +410,8 @@ void SparseMatrix::removeRange(int r1, int c1, int r2, int c2) {
 
             // Si la columna del nodo está dentro del rango, lo elimina
             if (curr->col >= c1 && curr->col <= c2)
-                removeCell(curr->row, curr->col);
+                // funcion sobrecargada para eliminar directamente el nodo
+                removeCell(curr);
 
             curr = next;
         }

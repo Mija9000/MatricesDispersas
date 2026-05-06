@@ -20,6 +20,10 @@ private:
     // Es privado, ya que el usuario no lo usa como tal
     Node* findNode(int r, int c);
 
+    // Versión interna optimizada sobrecargada PRIVADA, para que se cumpla el encapsulamiento,
+    // los usuarios no deben tener acceso a poder eliminar un nodo
+    bool removeCell(Node* target);
+
 public:
     SparseMatrix(int r, int c);
     ~SparseMatrix();
